@@ -1,5 +1,5 @@
 import flet as ft
-from main import temperatura_de_lugar, time_zone, forecast, icono_clima
+from main import temperatura_de_lugar, time_zone, forecast, icono_clima, name_icono
 
 
 class SearchButton(ft.ElevatedButton):
@@ -36,9 +36,12 @@ def main(page: ft.Page):
         ),
         bgcolor="#002b6e",
     )
-    txt_field = ft.TextField(text_align=ft.TextAlign.LEFT, width=300, height=40, color="#002b6e")
     content_container = ft.Column()
+    txt_field = ft.TextField(text_align=ft.TextAlign.CENTER, width=300, height=40, color="#002b6e")
+    
+
     def ok_clicked(e):
+        
         place = txt_field.value
         if place:
             txt_field.value = ""
@@ -48,8 +51,9 @@ def main(page: ft.Page):
             icon_url = icono_clima(place)
             timezone = time_zone(place)
             daily_time = forecast(place)
+            icon_description = name_icono(place)
 
-            time.value= f"{timezone} {place}"
+            time.value= f"{timezone} {place.capitalize()}"
             page.appbar.update()
             
 
@@ -63,7 +67,13 @@ def main(page: ft.Page):
                         margin=20,
                     ),
                     ft.Container(
-                        content=ft.Image(src=icon_url, width=60, height=60),
+                        content= ft.Column (
+                            controls = [
+                                ft.Image(src=icon_url, width=60, height=60),
+                                ft.Text(icon_description, color='#ffffff', font_family='Noto Sans Japanese', size=16, weight=ft.FontWeight.BOLD)
+                            ],
+                            alignment=ft.MainAxisAlignment.CENTER
+                        ),
                         padding=20,
                         bgcolor='#234b76',
                         border_radius=10,
