@@ -4,7 +4,7 @@ from datetime import datetime
 
 def temperatura_de_lugar (place):
     try:
-        parameters = {'key' : 'rxsjl8vt5wbc5x5twoz149tf8bfnbgzsm1c0vcnb', 'place_id': place}
+        parameters = {'key' : 'rxsjl8vt5wbc5x5twoz149tf8bfnbgzsm1c0vcnb', 'place_id': place, 'units':',metric'}
         url = "https://www.meteosource.com/api/v1/free/point"
         data = requests.get(url, parameters).json()
         temp = data['current']['temperature']
@@ -20,6 +20,16 @@ def icono_clima(place):
         return f"https://www.meteosource.com/static/img/ico/weather/{icono}.svg"
     except :
         return 'imagen no disponible'
+        
+def name_icono (place):
+    try:
+        parameters = {'key' : 'rxsjl8vt5wbc5x5twoz149tf8bfnbgzsm1c0vcnb', 'place_id': place}
+        url = "https://www.meteosource.com/api/v1/free/point"
+        data = requests.get(url, parameters).json()
+        icon_name = data['current']['summary']
+        return f"{icon_name}"
+    except :
+        return f'no se encuentra el estado actual del clima en {place}'
     
 def time_zone (place):
     params = {'key':'rxsjl8vt5wbc5x5twoz149tf8bfnbgzsm1c0vcnb', 'place_id': place,}
@@ -34,12 +44,13 @@ def time_zone (place):
         return f"hora no disponible {error}" 
 
 def forecast (place):
-    params= {'key':'rxsjl8vt5wbc5x5twoz149tf8bfnbgzsm1c0vcnb', 'place_id': place} 
+    params= {'key':'rxsjl8vt5wbc5x5twoz149tf8bfnbgzsm1c0vcnb', 'place_id': place, 'units': 'metric'} 
     url = "https://www.meteosource.com/api/v1/free/point"
     data = requests.get(url, params).json()
     wind_speed= data['current']['wind']['speed']
+    conv = wind_speed * 3.6
     wind_dir = data['current']['wind']['dir']
-    return f'{wind_speed} {wind_dir}'
+    return f'{conv:.2f}km/h {wind_dir}'
 
 #if __name__ == "__main__":
  #   print (temperatura_de_lugar('japan'))
