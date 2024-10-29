@@ -24,7 +24,7 @@ def main(page: ft.Page):
     page.window.height=550
     page.bgcolor="#ffffff"
     title_app = ft.Text("Weather App", color="#ffffff")
-    time =  ft.Text("", color="#ffffff")
+    time =  ft.Text("", color="#ffd800")
     page.appbar = ft.AppBar(
         # se envuelve todo el text en una fila para poder centrarlo con alignment
         title= ft.Row (             
@@ -60,7 +60,7 @@ def main(page: ft.Page):
             content_row = ft.Row (
                 controls=[
                     ft.Container(
-                        content=ft.Text(temperature, color="#ffffff", font_family='Noto Sans Japanese', size=16, weight=ft.FontWeight.BOLD),
+                        content=ft.Text(temperature, color="#ffd800", font_family='Noto Sans Japanese', size=16, weight=ft.FontWeight.BOLD),
                         padding=20,
                         bgcolor='#234b76',
                         border_radius=10,
@@ -70,7 +70,7 @@ def main(page: ft.Page):
                         content= ft.Column (
                             controls = [
                                 ft.Image(src=icon_url, width=60, height=60),
-                                ft.Text(icon_description, color='#ffffff', font_family='Noto Sans Japanese', size=16, weight=ft.FontWeight.BOLD)
+                                ft.Text(icon_description, color='#ffd800', font_family='Noto Sans Japanese', size=16, weight=ft.FontWeight.BOLD)
                             ],
                             alignment=ft.MainAxisAlignment.CENTER
                         ),
@@ -82,8 +82,8 @@ def main(page: ft.Page):
                     ft.Container(
                         content= ft.Column (
                             controls = [
-                                ft.Text('Wind Speed', color='#ffffff', font_family='Noto Sans Japanese', size=16, weight=ft.FontWeight.BOLD),
-                                ft.Text(daily_time , color='#ffffff', font_family='Noto Sans Japanese', size=16, weight=ft.FontWeight.BOLD),
+                                ft.Text('Wind Speed', color='#ffd800', font_family='Noto Sans Japanese', size=16, weight=ft.FontWeight.BOLD),
+                                ft.Text(daily_time , color='#ffd800', font_family='Noto Sans Japanese', size=16, weight=ft.FontWeight.BOLD),
                             ],
                         ),
                         padding=20,
