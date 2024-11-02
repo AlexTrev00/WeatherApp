@@ -1,6 +1,11 @@
 import requests
 from datetime import datetime
+import re
 
+def regex(place):
+    exp = r"^[a-zA-Z]+$"
+    matches = re.match(exp, place)
+    return matches is not None 
 
 def temperatura_de_lugar (place):
     try:
