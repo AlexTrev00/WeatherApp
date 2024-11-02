@@ -1,5 +1,5 @@
 import flet as ft
-from main import temperatura_de_lugar, time_zone, forecast, icono_clima, name_icono
+from main import temperatura_de_lugar, time_zone, forecast, icono_clima, name_icono, regex
 
 
 class SearchButton(ft.ElevatedButton):
@@ -44,6 +44,20 @@ def main(page: ft.Page):
         
         place = txt_field.value
         if place:
+            reg = regex(place)
+            if reg != True:
+                secondary_row = ft.Row (
+                    controls=[
+                        ft.Container(
+                            content=ft.Text('Lo Siento, Solo se admiten letras, intentelo de nuevo', color="ffd800", font_family="Noto Sans Japanese", size=16, weight=ft.FontWeight.BOLD),
+                            padding=20,
+                            bgcolor='#234b76',
+                            border_radius = 10,
+                            margin=20,
+                        )
+                    ],
+                    alignment = ft.MainAxisAlignment.CENTER
+                )
             txt_field.value = ""
             content_container.controls.clear()
 
