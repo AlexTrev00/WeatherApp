@@ -45,6 +45,7 @@ def main(page: ft.Page):
         place = txt_field.value
         if place:
             reg = regex(place)
+            # validacion de la expresion regular en FLET
             if reg != True:
                 secondary_row = ft.Row (
                     controls=[
