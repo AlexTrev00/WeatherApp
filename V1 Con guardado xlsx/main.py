@@ -10,7 +10,7 @@ API_KEY = 'rxsjl8vt5wbc5x5twoz149tf8bfnbgzsm1c0vcnb'
 BASE_URL = "https://www.meteosource.com/api/v1/free/point"
 
 def regex(place):
-    exp = r"^[a-zA-Z]+$"
+    exp = r"^[a-zA-ZáéíóúÁÉÍÓÚñÑ]+(\s+[a-zA-ZáéíóúÁÉÍÓÚñ]+)*$"
     matches = re.match(exp, place)
     return matches is not None 
 
