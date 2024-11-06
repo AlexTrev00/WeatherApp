@@ -5,6 +5,8 @@ from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment
 from openpyxl.chart import LineChart, Reference
 import openpyxl.utils
+from pathlib import Path
+
 
 API_KEY = 'rxsjl8vt5wbc5x5twoz149tf8bfnbgzsm1c0vcnb'
 BASE_URL = "https://www.meteosource.com/api/v1/free/point"
@@ -154,11 +156,13 @@ def guardar_en_excel(place):
     
     ws.add_chart(chart, "G5")
     
-    nombre_archivo = f"C:/Users/carlo/Documents/Clima_{place}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx"
+    nombre_archivo = Path({place}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx")
     
     try:
         wb.save(nombre_archivo)
         print(f"Archivo guardado en: {nombre_archivo}")
+        with open(nombre_archivo,'rb') as file:
+            content=file.read()
     except PermissionError:
         print(f"No se pudo guardar el archivo. Asegúrate de que el archivo no esté abierto y que tienes permisos de escritura en {nombre_archivo}.")
 
