@@ -3,7 +3,7 @@ from datetime import datetime
 import re
 
 def regex(place):
-    exp = r"^[a-zA-Z]+$"
+    exp = r"^[a-zA-ZáéíóúÁÉÍÓÚÑñ]+(\s+[a-zA-ZáéíóúÁÉÍÓÚÑñ]+)*$"
     matches = re.match(exp, place)
     return matches is not None 
 
