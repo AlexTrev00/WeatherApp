@@ -8,7 +8,7 @@ import openpyxl.utils
 from pathlib import Path
 
 
-API_KEY = 'rxsjl8vt5wbc5x5twoz149tf8bfnbgzsm1c0vcnb'
+API_KEY = 'lkzersr1hytpof1wj54ma832l6nr1wuqshjjx12a'
 BASE_URL = "https://www.meteosource.com/api/v1/free/point"
 
 def regex(place):
