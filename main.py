@@ -12,7 +12,7 @@ def regex(place):
 
 def temperatura_de_lugar (place):
     try:
-        parameters = {'key' : API_KEY, 'place_id': place, 'units':',metric'}
+        parameters = {'key' : API_KEY, 'place_id': place, 'units':'metric'}
         url = BASE_URL
         data = requests.get(url, parameters).json()
         temp = data['current']['temperature']
