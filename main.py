@@ -2,6 +2,9 @@ import requests
 from datetime import datetime
 import re
 
+API_KEY = 'lkzersr1hytpof1wj54ma832l6nr1wuqshjjx12a'
+BASE_URL = "https://www.meteosource.com/api/v1/free/point"
+
 def regex(place):
     exp = r"^[a-zA-ZáéíóúÁÉÍÓÚÑñ]+(\s+[a-zA-ZáéíóúÁÉÍÓÚÑñ]+)*$"
     matches = re.match(exp, place)
@@ -9,8 +12,8 @@ def regex(place):
 
 def temperatura_de_lugar (place):
     try:
-        parameters = {'key' : 'rxsjl8vt5wbc5x5twoz149tf8bfnbgzsm1c0vcnb', 'place_id': place, 'units':',metric'}
-        url = "https://www.meteosource.com/api/v1/free/point"
+        parameters = {'key' : API_KEY, 'place_id': place, 'units':',metric'}
+        url = BASE_URL
         data = requests.get(url, parameters).json()
         temp = data['current']['temperature']
         return f"{temp} °C"
@@ -18,8 +21,8 @@ def temperatura_de_lugar (place):
         print("Lugar geografico no accesible, intente de nuevo")
 def icono_clima(place):
     try:
-        parameters = {'key' : 'rxsjl8vt5wbc5x5twoz149tf8bfnbgzsm1c0vcnb', 'place_id': place}
-        url = "https://www.meteosource.com/api/v1/free/point"
+        parameters = {'key' : API_KEY, 'place_id': place}
+        url = BASE_URL
         data = requests.get(url, parameters).json()
         icono = data['current']['icon_num']
         return f"https://www.meteosource.com/static/img/ico/weather/{icono}.svg"
@@ -28,8 +31,8 @@ def icono_clima(place):
         
 def name_icono (place):
     try:
-        parameters = {'key' : 'rxsjl8vt5wbc5x5twoz149tf8bfnbgzsm1c0vcnb', 'place_id': place}
-        url = "https://www.meteosource.com/api/v1/free/point"
+        parameters = {'key' : API_KEY, 'place_id': place}
+        url = BASE_URL
         data = requests.get(url, parameters).json()
         icon_name = data['current']['summary']
         return f"{icon_name}"
@@ -37,8 +40,8 @@ def name_icono (place):
         return f'no se encuentra el estado actual del clima en {place}'
     
 def time_zone (place):
-    params = {'key':'rxsjl8vt5wbc5x5twoz149tf8bfnbgzsm1c0vcnb', 'place_id': place,}
-    url = "https://www.meteosource.com/api/v1/free/point"
+    params = {'key':API_KEY, 'place_id': place,}
+    url = BASE_URL
     try:
         data = requests.get(url, params).json()
         data_byhour = data.get("hourly", {}).get("data",[])
@@ -49,8 +52,8 @@ def time_zone (place):
         return f"hora no disponible {error}" 
 
 def forecast (place):
-    params= {'key':'rxsjl8vt5wbc5x5twoz149tf8bfnbgzsm1c0vcnb', 'place_id': place, 'units': 'metric'} 
-    url = "https://www.meteosource.com/api/v1/free/point"
+    params= {'key':API_KEY, 'place_id': place, 'units': 'metric'} 
+    url = BASE_URL
     data = requests.get(url, params).json()
     wind_speed= data['current']['wind']['speed']
     conv = wind_speed * 3.6
