@@ -4,7 +4,7 @@ from openpyxl.chart import LineChart, Reference
 import openpyxl.utils
 from pathlib import Path
 import requests
-from main import regex, temperatura_de_lugar, icono_clima, name_icono, time_zone, forecast
+from main import regex, temperatura_de_lugar, icono_clima, name_icono
 from datetime import datetime
 import os
 
@@ -73,16 +73,24 @@ def guardar_en_excel(place):
     column_widths = [12, 20, 25, 40, 30]  
     for i, width in enumerate(column_widths, start=1):
         ws.column_dimensions[openpyxl.utils.get_column_letter(i)].width = width
-    
+
+    '''Se define la primer grafica y se establecen sus valores
+    chart = LineChart()
+    chart.title = "Temperatura y Velocidad del Viento"
+    chart.style = 13
+    chart.x_axis.title = "Hora"
+    chart.y_axis.title = "Valores".'''
     chart = LineChart()
     chart.title = "Temperatura y Velocidad del Viento"
     chart.style = 13
     chart.x_axis.title = "Hora"
     chart.y_axis.title = "Valores"
-
+    '''Se establecen el rango de columnas y filas de cuales tomara los datos para la grafica
+    temp_series = Reference(ws, min_col=2, min_row=2, max_row=len(clima_datos) + 2)
+    wind_series = Reference(ws, min_col=3, min_row=2, max_row=len(clima_datos) + 2).'''
     temp_series = Reference(ws, min_col=2, min_row=2, max_row=len(clima_datos) + 2)
     wind_series = Reference(ws, min_col=3, min_row=2, max_row=len(clima_datos) + 2)
-
+    '''Agregar los datos a la grafica.'''
     chart.add_data(temp_series, titles_from_data=True)
     chart.add_data(wind_series, titles_from_data=True)
 
@@ -91,14 +99,60 @@ def guardar_en_excel(place):
 
     horas = Reference(ws, min_col=1, min_row=3, max_row=len(clima_datos) + 2)
     chart.set_categories(horas)
-    
+    '''Los muestra y agrega en el excel empezando la grafica en la celda G5.'''
     ws.add_chart(chart, "G5")
     
-    nombre_archivo = Path(f"{place}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx")
     
+
+    '''Segunda grafica
+    chart= LineChart()
+    chart.title = "temperatura durante la utlima hora"
+    chart.style=10
+    chart.x_axis.title = "hora"
+    chart.y_axis.title = "temperaturas".'''
+    chart= LineChart()
+    chart.title = "temperatura durante la utlima hora"
+    chart.style=10
+    chart.x_axis.title = "hora"
+    chart.y_axis.title = "temperaturas"
+    '''Se establecen el rango de columnas y filas de cuales tomara los datos para la grafica
+    hora_series = Reference(ws, min_col=1, min_row=2, max_row=len(clima_datos) + 2)
+    temp_series = Reference(ws, min_col=2, min_row=2, max_row=len(clima_datos) + 2).'''
+    hora_series = Reference(ws, min_col=1, min_row=2, max_row=len(clima_datos) + 2)
+    temp_series = Reference(ws, min_col=2, min_row=2, max_row=len(clima_datos) + 2)
+    '''Agregar los datos a la grafica
+    chart.add_data(hora_series, titles_from_data=True)
+    chart.add_data(temp_series, titles_from_data=True).'''
+    chart.add_data(hora_series, titles_from_data=True)
+    chart.add_data(temp_series, titles_from_data=True)
+    '''Los muestra y agrega en el excel empezando la grafica en la celda G20.'''
+    ws.add_chart(chart, "G20")
+    '''Tercera grafica.'''
+    chart=LineChart()
+    chart.title = "vientos por hora"
+    chart.style = 9
+    chart.x_axis.title="hora"
+    chart.y_axis.title="vientos (km/h)"
+
+    hora_series = Reference(ws, min_col=1, min_row=2, max_row=len(clima_datos) +2)
+    vientos_series = Reference(ws, min_col=3, min_row=2, max_row=len(clima_datos) +2)
+
+    chart.add_data(hora_series, titles_from_data=True)
+    chart.add_data(vientos_series, titles_from_data=True)
+
+    ws.add_chart(chart, "G35")
+    '''Se guarda el archivo empezando con el nombre que se consulto seguido del año, mes y hora de consulta
+    nombre_archivo = Path(f"{place}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx").'''
+    nombre_archivo = Path(f"{place}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.xlsx")
+    '''Nombre archivo que contiene la ruta del archivo se guarda como workbook
+    wb.save(nombre_archivo).'''
     try:
         wb.save(nombre_archivo)
+        '''Se imprime la salida de la ruta del archivo
+        print(f"Archivo guardado en: {nombre_archivo}").'''
         print(f"Archivo guardado en: {nombre_archivo}")
+        '''Con el modulo os abrimos automaticamente el archivo en excel despues de que este se guarde
+        os.startfile(nombre_archivo).'''
         os.startfile(nombre_archivo)
         
     except PermissionError:
