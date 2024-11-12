@@ -1,6 +1,8 @@
 from openpyxl import Workbook
 from openpyxl.styles import Font, PatternFill, Alignment
 from openpyxl.chart import LineChart, Reference
+from openpyxl.chart import BarChart, Reference
+from openpyxl.chart import AreaChart, Reference
 import openpyxl.utils
 from pathlib import Path
 import requests
@@ -104,13 +106,13 @@ def guardar_en_excel(place):
     
     
 
-    '''Segunda grafica
-    chart= LineChart()
+    '''Segunda grafica Barras
+    chart= BarChart()
     chart.title = "temperatura durante la utlima hora"
     chart.style=10
     chart.x_axis.title = "hora"
     chart.y_axis.title = "temperaturas".'''
-    chart= LineChart()
+    chart= BarChart()
     chart.title = "temperatura durante la utlima hora"
     chart.style=10
     chart.x_axis.title = "hora"
@@ -122,13 +124,13 @@ def guardar_en_excel(place):
     temp_series = Reference(ws, min_col=2, min_row=2, max_row=len(clima_datos) + 2)
     '''Agregar los datos a la grafica
     chart.add_data(hora_series, titles_from_data=True)
-    chart.add_data(temp_series, titles_from_data=True).'''
+    chart.set_categories(temp_series).'''
     chart.add_data(hora_series, titles_from_data=True)
-    chart.add_data(temp_series, titles_from_data=True)
+    chart.set_categories(temp_series)
     '''Los muestra y agrega en el excel empezando la grafica en la celda G20.'''
     ws.add_chart(chart, "G20")
-    '''Tercera grafica.'''
-    chart=LineChart()
+    '''Tercera grafica Area.'''
+    chart=AreaChart()
     chart.title = "vientos por hora"
     chart.style = 9
     chart.x_axis.title="hora"
@@ -137,7 +139,7 @@ def guardar_en_excel(place):
     hora_series = Reference(ws, min_col=1, min_row=2, max_row=len(clima_datos) +2)
     vientos_series = Reference(ws, min_col=3, min_row=2, max_row=len(clima_datos) +2)
 
-    chart.add_data(hora_series, titles_from_data=True)
+    chart.set_categories(hora_series)
     chart.add_data(vientos_series, titles_from_data=True)
 
     ws.add_chart(chart, "G35")
